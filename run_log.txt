@@ -1,0 +1,7 @@
+cmd: python3 analysis_078.py
+start_utc: 2026-10-09T16:44:52Z
+numpy 2.2.6 pandas 2.3.3 sklearn 1.7.2 torch 2.14.1+cpu transformers 5.19.0
+Python 3.10.12
+RESULT_JSON {"n_train": 5000, "n_ext": 5000, "n_ext_families": 250, "ext_label_counts": {"1": 583, "2": 1577, "3": 1518, "4": 559, "5": 360, "6": 168, "7": 235}, "macroF1_ext": {"E": 0.4360218871195544, "C": 0.20236684079034198}, "acc_E": 0.48, "agree_rate": 0.2656, "AUROC": {"agree": 0.4886057692307692, "conf": 0.67694375, "conf_oof": 0.6724081730769231, "conf_plus_agree_oof": 0.6745540064102564, "conf_plus_predclass_oof": 0.7302540064102564}, "G1_perm_AUROC_agree": 0.49942307692307697, "G1": {"E_macroF1_gt_chance_plus_0p05": true, "perm_AUROC_within_0p05_of_half": true, "pass_": true}, "G2": {"auroc": 0.4886057692307692, "ci": [0.4596878864256271, 0.5190229482384545], "pass_": false}, "G3": {"delta_auroc": 0.0021458333333332913, "ci": [-0.00495273176705317, 0.009323136612929637], "pass_": false}, "LABEL": "HONEST NEGATIVE"}
+exit: 0
+end_utc: 2026-10-09T16:45:07Z
