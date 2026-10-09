@@ -15,11 +15,13 @@ Label (set mechanically by analysis_078.py): **HONEST NEGATIVE**. G1 pass, G2 fa
 | AUROC OOF: conf + predicted class (descriptive, cannot change label) | 0.730 |
 
 ## What this shows and does not show
-- Under this frozen design, agreement between the ESM-2 model and the composition model carries no information about whether the ESM-2 prediction is right on new Pfam families (AUROC 0.489, about chance, CI includes 0.5). The model's own confidence is moderately informative (AUROC 0.677), and agreement adds nothing to it.
-- This does not show that model agreement is useless in general. The C-model is weak (macro-F1 0.202, near chance 0.143 plus a little) and agrees with E only 27% of the time; a stronger or more independent second model might behave differently. Not tested.
-- The descriptive predicted-class combination (0.730 vs 0.672) suggests which class E predicts carries more information about correctness than confidence alone. This is descriptive only, not a registered result.
-- External families are disjoint by Pfam id only; clan-level overlap with train families is not measured.
-- E external macro-F1 0.436 is higher than DOC-2-072's 5-fold family-split 0.371. The two runs use different samples and training size (full 5,000 vs 4/5), so they are not directly comparable; no inference drawn.
+- A single binary agreement score between the ESM-2 model and this weak, balanced-weight composition model carries no detectable information about whether the ESM-2 prediction is right on new Pfam families (AUROC 0.489, 95% CI [0.460, 0.519]; the point estimate is slightly below 0.5). "No information" is not claimed: the CI upper bound is 0.52. The model's own confidence is moderately informative (AUROC 0.677) and agreement adds nothing to it (G3 delta +0.002).
+- This does not show that model agreement is useless in general. Two specific reasons: the second model is weak (macro-F1 0.202) and class-balanced; and only one agreement definition (hard argmax equality) was tested. Soft agreement (probability distance) and a stronger second model are untested.
+- Structural reading (exploratory, my recomputation from the run inputs): P(E correct | agree) = 0.459 (n = 1,328), P(E correct | disagree) = 0.488, so agreement is marginally anti-informative. E predicts class 2 or 3 for 58% of proteins (follows class priors), while the balanced C-model spreads predictions near-uniformly, so agreement mostly means "C landed on E's class", which is unrelated to correctness. The independent gate reported 1,333 agreeing, 0.460 vs 0.486 and per-class agree AUROCs (class 6 about 0.68 on n = 91, others about 0.45 to 0.51); these are gate-derived, from a rerun with sklearn 1.9.1, and I did not reproduce the per-class figures.
+- The descriptive conf + predicted-class combination (OOF AUROC 0.730 vs 0.672) is exploratory only and cannot change the label (PROTOCOL.md). It indicates that E's per-class accuracy differs. It does not show that predicted-class identity is a useful confidence signal on new data: its OOF folds are fit on the same external set and it was not checked on held-out data.
+- External families are disjoint from train families by Pfam id only; clan-level overlap is not measured.
+- E external macro-F1 0.436 is not comparable to DOC-2-072's 0.371 (different samples, full vs 4/5 training); no inference drawn.
+- G2 power: with 1,328 agreeing proteins and a CI half-width of about 0.03, an AUROC of 0.60 would have been detected (gate-stated).
 
 ## Disclosures
 - The builder had seen DOC-2-072's aggregate results before locking (stated in PROTOCOL.md).
